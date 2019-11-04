@@ -9,6 +9,7 @@ import { HttpService } from 'src/app/service/http.service';
 })
 export class ListOfIssuesComponent implements OnInit {
   totalCount:string;
+  approvedCounts:any;
   counts;
  name:string="sai";
 
@@ -18,13 +19,21 @@ export class ListOfIssuesComponent implements OnInit {
 
   ngOnInit() {
     
-   
+   this.approvedcount()
     }
     totalcount(){
       return this.totalNumberCount.get('/viewIssue/totalCount').subscribe((res) => {
         this.totalCount = res['reportList'];
         //this.counts=this.totalCount.count 
          console.log("totalcount",this.totalCount)
+   
+       });
+    }
+   approvedcount(){
+      return this.totalNumberCount.get('/viewIssue/approvedCount').subscribe((res) => {
+        this.approvedCounts = res['reportList'].count;
+        //this.counts=this.totalCount.count 
+         console.log("approvedCounts",this.approvedCounts)
    
        });
     }
