@@ -25,7 +25,7 @@
     </thead>
     <tbody>
 
-        <tr *ngFor="let view of approvedIssues.userReport">
+        <tr *ngFor="let view of approvedIssues.userReport | paginate: { itemsPerPage: 5, currentPage: p }">
             <td>{{view.offenceCategory}}</td>
             <td>{{view.location}}</td>
             <td class="text-info">{{view.status}}</td>
@@ -38,7 +38,8 @@
         </tr>
     </tbody>
 </table>
-<nav aria-label="Page navigation example">
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<!-- <nav aria-label="Page navigation example">
     <ul class="pagination pagination-lg justify-content-end">
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
         <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -46,7 +47,7 @@
         <li class="page-item"><a class="page-link" href="#">3</a></li>
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
     </ul>
-</nav>
+</nav> -->
 <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">

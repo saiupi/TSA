@@ -13,7 +13,7 @@ export class ListOfIssuesComponent implements OnInit {
   counts;
  name:string="sai";
 
-  constructor(private router: Router,private totalNumberCount:HttpService) {
+  constructor(private router: Router,private totalNumService:HttpService) {
     this.totalcount()
    }
 
@@ -22,7 +22,7 @@ export class ListOfIssuesComponent implements OnInit {
    this.approvedcount()
     }
     totalcount(){
-      return this.totalNumberCount.get('/viewIssue/totalCount').subscribe((res) => {
+      return this.totalNumService.get('/viewIssue/totalCount').subscribe((res) => {
         this.totalCount = res['reportList'];
         //this.counts=this.totalCount.count 
          console.log("totalcount",this.totalCount)
@@ -30,7 +30,7 @@ export class ListOfIssuesComponent implements OnInit {
        });
     }
    approvedcount(){
-      return this.totalNumberCount.get('/viewIssue/approvedCount').subscribe((res) => {
+      return this.totalNumService.get('/viewIssue/approvedCount').subscribe((res) => {
         this.approvedCounts = res['reportList'].count;
         //this.counts=this.totalCount.count 
          console.log("approvedCounts",this.approvedCounts)

@@ -18,7 +18,7 @@ import { PendingIssuesComponent } from './viewIssuesSearch/pending-issues/pendin
 import { RejectedIssuesComponent } from './viewIssuesSearch/rejected-issues/rejected-issues.component';
 import { HttpClientModule } from '@angular/common/http';
 // import { HttpClient } from '@angular/common/http';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,14 +32,16 @@ import { HttpClientModule } from '@angular/common/http';
     TotalNumberIssuesComponent,
     ApprovedIssuesComponent,
     PendingIssuesComponent,
-    RejectedIssuesComponent
+    RejectedIssuesComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule  
+    HttpClientModule ,
+    NgxPaginationModule 
   ],
   //providers: [AuthcationGuard],
   providers: [],

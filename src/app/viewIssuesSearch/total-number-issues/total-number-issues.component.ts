@@ -9,6 +9,8 @@ import { HttpService } from 'src/app/service/http.service';
 export class TotalNumberIssuesComponent implements OnInit {
   totalIssues:any;
   fullDetails:any;
+  p: number = 1;
+  
   constructor(private totalService:HttpService) { }
 
   ngOnInit() {
@@ -27,5 +29,5 @@ export class TotalNumberIssuesComponent implements OnInit {
     this.fullDetails=modalDispaly
 
   }
-
+   
 }
