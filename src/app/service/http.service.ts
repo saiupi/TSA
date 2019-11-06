@@ -6,14 +6,15 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class HttpService {
-
+  
   apiUrl: string = 'http://192.168.3.211:4000'
   // /userDetails/adminLogin
   constructor(public http: HttpClient) { }
   get(url) {
 
 
-    return this.http.get(this.apiUrl + url)
+    return this.http.get(this.apiUrl + url);
+    
   }
   post(url, body) {
 

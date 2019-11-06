@@ -18,7 +18,7 @@ export class TotalNumberIssuesComponent implements OnInit {
     return this.totalService.get('/viewIssue/totalpost').subscribe((res) => {
       
       
-      this.totalIssues=res
+      this.totalIssues=res['userReport']
 
       console.log("Pending Issue", res)
     

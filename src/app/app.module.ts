@@ -19,6 +19,9 @@ import { RejectedIssuesComponent } from './viewIssuesSearch/rejected-issues/reje
 import { HttpClientModule } from '@angular/common/http';
 // import { HttpClient } from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FilterPipe } from './pipe/filter.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +36,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ApprovedIssuesComponent,
     PendingIssuesComponent,
     RejectedIssuesComponent,
+    FilterPipe,
     
   ],
   imports: [
@@ -41,7 +45,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule ,
-    NgxPaginationModule 
+    NgxPaginationModule,
+    Ng2SearchPipeModule 
   ],
   //providers: [AuthcationGuard],
   providers: [],

@@ -1,8 +1,10 @@
+
+
 <form>
     <div class="form-row">
         <div class="col-4">
             <label class="text-secondary mt-3 text-info display-4">Pending Issues</label>
-            <input type="text" class="form-control" placeholder="Search">
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
         </div>
         <div lass="col">
 
@@ -12,114 +14,135 @@
         </div>
     </div>
 </form>
+
 <table class="table table-hover bg-light mt-3">
     <thead>
         <tr class="text-secondary">
-            <th>Offence Category</th>
+            <th>MobileNumber</th>
+
             <th>Location</th>
-            <th>Status</th>
+            <th>OffenceCategory</th>
+
             <th>IssueDate</th>
             <th>Image</th>
 
-            <th>Approved</th>
-            <th>Rejected</th>
+            <th>Status</th>
+
             <th>Details</th>
         </tr>
     </thead>
     <tbody>
 
-        <tr *ngFor="let view of pendingIssues.userReport | paginate: { itemsPerPage: 5, currentPage: p }">
-            <td>{{view.offenceCategory}}</td>
+        <tr *ngFor="let view of pendingIssues| paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+            <td class="text-info">{{view.mobileNum}}</td>
             <td>{{view.location}}</td>
-            <td class="text-info">{{view.status}}</td>
+            <td>{{view.offenceCategory}}</td>
+
+
             <td>{{view.issueDate}}</td>
-            <td><img [src]="'data:image/jpg;base64,'+view.image" class="img-fluid" alt="Responsive image" style="border-radius: 50% !important;
-            height:50px; width:50px;"></td>
-            <td><button class="btn btn-success" (click)="approved()">Approved</button></td>
-            <td><button class="btn btn-danger" (click)="rejected()">Rejected</button></td>
-            <td><button class="btn btn-info" data-toggle="modal" data-target="#myModal" (click)="details(view)">Details</button></td>
+            <td><img [src]="'data:image/jpg;base64,'+view.image" class="img-fluid" alt="Responsive image" style="border-radius:10% !important;
+            height:70px; width:70px;"></td>
+            <td>{{view.status}}</td>
+            <td> <button href="#myModal" id="openBtn" data-toggle="modal" class="btn btn-default"
+                    (click)="updateEvent(view)"><em class="fas fa-edit nav-link text-info"></em></button></td>
+            <!-- <td (click)="upDate(view)">
+                <i class="fas fa-edit nav-link text-info" aria-hidden="true" data-toggle="modal" data-target="#myModal"></i>
+            </td> -->
         </tr>
-       
+
     </tbody>
 </table>
-<!-- <nav aria-label="Page navigation example">
-    <ul class="pagination pagination-lg justify-content-end">
-        <li class="page-item"><a class="page-link" >Previous</a></li>
-        <li class="page-item"><a class="page-link" >1</a></li>
-        <li class="page-item"><a class="page-link">2</a></li>
-        <li class="page-item"><a class="page-link" >3</a></li>
-        <li class="page-item"><a class="page-link">Next</a></li>
-    </ul>
-</nav> -->
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
 
-<div class="modal fade" id="myModal">
+
+<div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-xl">
-        <div class="modal-content">
+        <!-- Modal content-->
+        <form [formGroup]="myform" (ngSubmit)="saveViewIssues(myform.value);">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Table detailes</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
 
-
-            <div class="modal-header">
-                <h4 class="modal-title">Pending Issues Details</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-5">
-                        <img [src]="'data:image/jpg;base64,'+fullDetails.image" class="img-fluid" alt="Responsive image"
-                            style=" height:300px; width:350px">
-                    </div>
-                    <div class="col-7">
-
-
-
-                        <form>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">ReportId :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.reportId}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Name :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.location}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Mobile Number :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.mobileNum}}</b>
-                                </div>
+                                <img [src]="'data:image/jpg;base64,'+images">
                             </div>
 
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Offence Category :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.offenceCategory}}</b>
+                            <div class="col-7">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Report Id</label>
+                                        <input type="text" placeholder="reportId" formControlName="reportId"
+                                            class="form-control" name="reportId">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label> mobileNumber</label>
+                                        <input type="text" placeholder="mobileNumber" formControlName="mobileNumber"
+                                            class="form-control" name="mobileNumber">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Location :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.location}}</b>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>offenceCategory</label>
+                                        <input type="text" placeholder="offenceCategory"
+                                            formControlName="offenceCategory" class="form-control"
+                                            name="offenceCategory">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Vehicle type</label>
+                                        <input type="text" placeholder="Vehicle type" formControlName="vehicleType"
+                                            class="form-control" name="vehicleType">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">IssueDate :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.issueDate}}</b>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>vehicle Number</label>
+                                        <input type="text" placeholder="vehicleNumber" formControlName="vehicleNumber"
+                                            class="form-control" name="vehicleNumber">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>location</label>
+                                        <input type="text" placeholder="location" formControlName="location"
+                                            class="form-control" name="location">
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>status</label>
+
+
+                                        <select class="form-control" formControlName="status" name="status">
+                                            <option value="Approved">Approved</option>
+                                            <option value="Rejected">Rejected</option>
+                                            <option value="Pending">Pending</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>issueDate</label>
+                                        <input type="text" placeholder="issueDate" formControlName="issueDate"
+                                            class="form-control" name="issueDate">
+                                    </div>
+
+                                </div>
+
+
+
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+                    <button type="submit" name="submit" class="btn btn-primary float-right">Update</button>
 
+
+                </div>
             </div>
-        </div>
+        </form>
+    </div>
+</div>
+<pagination-controls (pageChange)="p = $event" class="pagination pagination-lg justify-content-end">
+</pagination-controls>

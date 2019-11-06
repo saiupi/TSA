@@ -7,15 +7,15 @@ import { HttpService } from 'src/app/service/http.service';
   styleUrls: ['./rejected-issues.component.css']
 })
 export class RejectedIssuesComponent implements OnInit {
-
+p: number = 1;
   rejectedIssues: any;
   fullDetails:any;
   constructor(private rejectedService: HttpService) { }
 
   ngOnInit() {
     return this.rejectedService.get('/viewIssue/rejected').subscribe((res) => {
-     this.rejectedIssues = res
-      console.log("Pending Issue",this.rejectedIssues)
+     this.rejectedIssues = res['userReport']
+      console.log("rejected Issue",this.rejectedIssues)
 
     });
 

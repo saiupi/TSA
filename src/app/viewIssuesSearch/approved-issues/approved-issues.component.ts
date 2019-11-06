@@ -7,14 +7,14 @@ import { HttpService } from 'src/app/service/http.service';
   styleUrls: ['./approved-issues.component.css']
 })
 export class ApprovedIssuesComponent implements OnInit {
-
+  p: number = 1;
   approvedIssues: any;
   fullDetails:any;
   constructor(private approvedService: HttpService) { }
 
   ngOnInit() {
     return this.approvedService.get('/viewIssue/approved').subscribe((res) => {
-     this.approvedIssues = res
+     this.approvedIssues = res['userReport']
       console.log("Pending Issue",this.approvedIssues)
 
     });
