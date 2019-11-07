@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert2';
 import { HttpService } from 'src/app/service/http.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoaderSpinnerService } from 'src/app/service/loader-spinner.service';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 
@@ -17,84 +17,120 @@ export class PendingIssuesComponent implements OnInit {
   myform: FormGroup;
   images: any;
   updateData: Object;
- 
-
-  constructor(private pendingService: HttpClient, private loaderService: LoaderSpinnerService, private fb: FormBuilder) {
-
+  loading = true;
+  mobileNum: any;
+  vehicleTypes: any;
+  submitted: boolean;
+  constructor(private pendingService: HttpClient, private loaderService: LoaderSpinnerService,
+    private fb: FormBuilder, private vehicleService: HttpService) {
+    this.pendingMethod();
+    this.vehicleType();
   }
 
   ngOnInit() {
 
     this.myform = this.fb.group({
       reportId: ['', Validators.required],
-      mobileNumber: ['', Validators.required],
+      mobileNum: ['', Validators.required],
       offenceCategory: ['', Validators.required],
       vehicleType: ['', Validators.required],
-      vehicleNumber: ['', Validators.required],
+      image: ['', Validators.required],
       location: ['', Validators.required],
       status: ['', Validators.required],
       issueDate: ['', Validators.required],
-    
+
     })
 
 
 
+  }
 
-    return this.pendingService.get('http://192.168.3.211:4000/viewIssue/pending').subscribe((res) => {
-      this.pendingIssues = res['userReport']
+  vehicleType() {
+    return this.vehicleService.get('/vehicle/getAll').subscribe((res) => {
+      this.vehicleTypes = res['vehicleType'];
+
+      // this.loading = false;
+      console.log("vehicleTypesssss", this.vehicleTypes);
+
+    });
+  }
+  pendingMethod() {
+    return this.vehicleService.get('/viewIssue/pending').subscribe((res) => {
+      this.pendingIssues = res['userReport'];
+      this.loading = false;
       console.log("Pending Issue", res)
 
     });
-
-
   }
 
   updateEvent(data) {
-    console.log(data);
+
     this.myform.patchValue({
       'reportId': data.reportId,
-      'mobileNumber': data.mobileNumber,
+      'mobileNum': data.mobileNum,
       'offenceCategory': data.offenceCategory,
       'location': data.location,
       'status': data.status,
       'issueDate': data.issueDate,
       'imageName': data.imagename,
-      'image'  :data.image,
+      'image': data.image,
+
 
     });
-
-    this.images = data.image
+    console.log("myformdata", data);
+    this.images = data.image;
+    this.mobileNum = data.mobileNum;
   }
-  saveViewIssues(data) {
-    console.log(data);
-    this.myform.setValue({
+  saveView() {
+    // console.log(data);
+    // this.myform.setValue({
 
-      'reportId': data.reportId,
-      'mobileNumber': data.mobileNumber,
-      'offenceCategory': data.offenceCategory,
-      'vehicleType': data.vehicleType,
-      'vehicleNumber': data.vehicleNumber,
-      'location': data.location,
-      'status': data.status,
-      'issueDate': data.issueDate,
-      'image'  :data.image,
-      
-    });
+    //   'reportId': data.reportId,
+    //   'mobileNum': data.mobileNum,
+    //   'offenceCategory': data.offenceCategory,
+    //   'vehicleType': data.vehicleType,
 
-    this.pendingService.post("http://192.168.3.211:4000/viewIssue/editReport",data).subscribe(resdata => {
-      this.updateData = resdata; 
-    
-      console.log("edit", this.updateData);
+    //   'location': data.location,
+    //   'status': data.status,
+    //   'issueDate': data.issueDate,
+    //   'image': data.image,
+
+    // });
+    this.submitted = true;
+
+    let profile = {
+
      
+
+      reportId: this.myform.controls['reportId'].value,
+      mobileNum: this.myform.controls['mobileNum'].value,
+      offenceCategory: this.myform.controls['offenceCategory'].value,
+      vehicleType: this.myform.controls['vehicleType'].value,
+      image: this.myform.controls['image'].value,
+      location: this.myform.controls['location'].value,
+      status: this.myform.controls['status'].value,
+      issueDate: this.myform.controls['issueDate'].value,
+
+      headers: new HttpHeaders({
+        'enctype': 'multipart/form-data; boundary=----WebKitFormBoundaryuL67FWkv1CA'
+      })
+    };
+    console.log("dfjafjdsjfja",profile)
+
+    this.vehicleService.post("/viewIssue/editReport",profile).subscribe(resdata => {
+      this.updateData = resdata;
+
+      console.log("edifgsdfgsdfgt",this.updateData);
+
     },
 
 
     )
   }
-  
+  get f() { return this.myform.controls; }
 
   approveda() {
-   
+
     swal.fire('Oops...', 'Something went wrong!', 'error')
   }
   approved() {
@@ -112,7 +148,7 @@ export class PendingIssuesComponent implements OnInit {
           '',
           'success'
         )
-    
+
       } else if (result.dismiss === swal.DismissReason.cancel) {
         swal.fire(
           'Cancelled',
@@ -137,7 +173,7 @@ export class PendingIssuesComponent implements OnInit {
           '',
           'success'
         )
-       
+
       } else if (result.dismiss === swal.DismissReason.cancel) {
         swal.fire(
           'Cancelled',

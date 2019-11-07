@@ -1,10 +1,8 @@
-
-
 <form>
     <div class="form-row">
         <div class="col-4">
-            <label class="text-secondary mt-3 text-info display-4">Pending Issues</label>
-            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
+            <label class="text-secondary mt-3 text-success display-4">Approved Issues</label>
+            <input type="text" class="form-control" placeholder="Search">
         </div>
         <div lass="col">
 
@@ -14,6 +12,13 @@
         </div>
     </div>
 </form>
+<div *ngIf="loading else loaded">
+    <div class="d-flex justify-content-center text-info">
+        <div class="spinner-border" role="status">
+        </div>
+    </div>
+</div>
+
 
 <table class="table table-hover bg-light mt-3">
     <thead>
@@ -57,7 +62,7 @@
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-xl">
         <!-- Modal content-->
-        <form [formGroup]="myform" (ngSubmit)="saveViewIssues(myform.value);">
+        <form  [formGroup]="myform" (ngSubmit)="saveView()">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Table detailes</h4>
@@ -66,9 +71,11 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row">
+
                             <div class="col-5">
 
-                                <img [src]="'data:image/jpg;base64,'+images">
+                                <img [src]="'data:image/jpg;base64,'+images" formControlName="image" class="img-fluid"
+                                    alt="Responsive image">
                             </div>
 
                             <div class="col-7">
@@ -79,9 +86,9 @@
                                             class="form-control" name="reportId">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label> mobileNumber</label>
-                                        <input type="text" placeholder="mobileNumber" formControlName="mobileNumber"
-                                            class="form-control" name="mobileNumber">
+                                        <label>mobileNum</label>
+                                        <input type="text" placeholder="mobileNum" formControlName="mobileNum"
+                                            class="form-control" name="mobileNum">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -92,16 +99,21 @@
                                             name="offenceCategory">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label>Vehicle type</label>
-                                        <input type="text" placeholder="Vehicle type" formControlName="vehicleType"
-                                            class="form-control" name="vehicleType">
+                                        <label>status</label>
+
+
+                                        <select class="form-control" formControlName="vehicleType" name="status">
+                                            <option selected> Select vehicleType</option>
+                                            <option *ngFor="let offence of vehicleTypes;"> {{offence.vehicleTypes}}
+                                            </option>
+
+                                        </select>
+
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label>vehicle Number</label>
-                                        <input type="text" placeholder="vehicleNumber" formControlName="vehicleNumber"
-                                            class="form-control" name="vehicleNumber">
+
                                     </div>
                                     <div class="col-sm-6">
                                         <label>location</label>
@@ -115,9 +127,10 @@
 
 
                                         <select class="form-control" formControlName="status" name="status">
-                                            <option value="Approved">Approved</option>
-                                            <option value="Rejected">Rejected</option>
-                                            <option value="Pending">Pending</option>
+                                            <option selected> Select Status</option>
+                                            <option value="approved">approved</option>
+                                            <option value="rejected">rejected</option>
+                                            <option value="pending">pending</option>
 
                                         </select>
                                     </div>
@@ -136,11 +149,13 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+
                     <button type="submit" name="submit" class="btn btn-primary float-right">Update</button>
 
 
                 </div>
             </div>
+
         </form>
     </div>
 </div>

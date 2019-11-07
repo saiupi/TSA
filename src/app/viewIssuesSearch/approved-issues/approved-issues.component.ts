@@ -10,13 +10,14 @@ export class ApprovedIssuesComponent implements OnInit {
   p: number = 1;
   approvedIssues: any;
   fullDetails:any;
+  loading = true;
   constructor(private approvedService: HttpService) { }
 
   ngOnInit() {
     return this.approvedService.get('/viewIssue/approved').subscribe((res) => {
-     this.approvedIssues = res['userReport']
-      console.log("Pending Issue",this.approvedIssues)
-
+     this.approvedIssues = res['userReport'];
+      console.log("Pending Issue",this.approvedIssues);
+      this.loading = false;
     });
 
   }

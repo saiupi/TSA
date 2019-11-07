@@ -10,7 +10,7 @@ export class TotalNumberIssuesComponent implements OnInit {
   totalIssues:any;
   fullDetails:any;
   p: number = 1;
-  
+  loading = true;
   constructor(private totalService:HttpService) { }
 
   ngOnInit() {
@@ -19,7 +19,7 @@ export class TotalNumberIssuesComponent implements OnInit {
       
       
       this.totalIssues=res['userReport']
-
+      this.loading = false;
       console.log("Pending Issue", res)
     
     });
