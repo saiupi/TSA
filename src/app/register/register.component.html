@@ -1,0 +1,78 @@
+<!-- <div class="wrapper">
+
+
+    <div class="container">
+
+        <h3 align="center">Traffic Sudharo Admin Register</h3>
+        <hr class="type">
+        <h3 class="text-danger">{{errorMsg}}</h3>
+        <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label class="text-light">User Name</label>
+                <input type="text" formControlName="username"
+                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">username is required</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="text-light">Password</label>
+                <input type="password" formControlName="password"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary">Rigster</button>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary" (click)="register()">Login</button>
+            </div>
+
+
+        </form>
+
+    </div>
+
+
+
+</div> -->
+<div class="container bgclr">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h4>Traffic Sudharo Admin Register</h4>
+            <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label>User Name</label>
+                    <input type="text" formControlName="username" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">username is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="text" formControlName="password" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastName.errors.required">Passwordis required</div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <button class="btn btn-primary">Register</button>
+                </div>
+
+            </form>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary" (click)="register()">Login</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>

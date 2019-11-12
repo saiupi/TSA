@@ -13,11 +13,11 @@
     </div>
 </form>
 <div *ngIf="loading else loaded">
-        <div class="d-flex justify-content-center text-info">
-            <div class="spinner-border" role="status">
-            </div>
+    <div class="d-flex justify-content-center text-info">
+        <div class="spinner-border" role="status">
         </div>
     </div>
+</div>
 <table class="table table-hover bg-light mt-3">
     <thead>
         <tr class="text-secondary">
@@ -44,82 +44,34 @@
         </tr>
     </tbody>
 </table>
-<pagination-controls (pageChange)="p = $event" class="pagination pagination-lg justify-content-end"></pagination-controls>
+<pagination-controls (pageChange)="p = $event" class="pagination pagination-lg justify-content-end">
+</pagination-controls>
 
-<!-- <nav aria-label="Page navigation example">
-    <ul class="pagination pagination-lg justify-content-end">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-</nav> -->
-<!-- <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-xl">
+<form [formGroup]="form">
+        <input name="first" formControlName="first" [(ngModel)]="example.first"/>
+        <input name="last" formControlName="last" [(ngModel)]="example.last"/>
+      </form>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
         <div class="modal-content">
 
+            <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Approved Issues Details</h4>
+                <h4 class="modal-title">Modal Heading</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
-
+            <!-- Modal body -->
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-5">
-                        <img [src]="'data:image/jpg;base64,'+fullDetails.image" class="img-fluid" alt="Responsive image"
-                            style=" height:300px; width:350px">
-                    </div>
-                    <div class="col-7">
-
-
-
-                        <form>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">ReportId :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.reportId}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Name :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.location}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Mobile Number :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.mobileNum}}</b>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Offence Category :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.offenceCategory}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Location :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.location}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">IssueDate :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.issueDate}}</b>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-
+                  
             </div>
-        </div> -->
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

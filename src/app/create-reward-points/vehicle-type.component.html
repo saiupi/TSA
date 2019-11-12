@@ -1,0 +1,109 @@
+<!-- <h5 style="padding-top:20px;"> Create Reward Points</h5>
+<div style="margin-top:60px;">
+       
+    <div class="form-row">
+        <div class="col-2">
+            <label class="text-secondary text-success ">Violation Type :</label>
+        </div>
+        <div class="col-4">
+            <select [(ngModel)]="selectedLevel" class="form-control" >
+                <option *ngFor="let view of getViolationTypes" [ngValue]="view">{{view.name}}</option>
+            </select>
+        </div>
+    </div><br>
+    <div class="form-row">
+        <div class="col-2">
+            <label class="text-secondary text-success ">Violation Type id:</label>
+        </div>
+        <div class="col-4">
+            
+        
+                <input type="text"> {{selectedLevel.violationTypeId}}
+           
+        </div>
+    </div><br>
+    <div class="form-row">
+        <div class="col-2">
+            <label class="text-secondary text-success ">points:</label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" formControlName="points" placeholder="Points">
+
+
+        </div>
+    </div><br>
+    <div class="form-row">
+        <div class="col-2">
+
+        </div>
+        <div class="col-1">
+            <button class="btn btn-info">Submit</button>
+
+
+        </div>
+    </div>
+</div> -->
+
+<!-- <form>
+
+
+
+    <div class="col-4">
+        <select [(ngModel)]="selectedLevel" class="form-control">
+            <option *ngFor="let view of getViolationTypes" [ngValue]="view">{{view.name}}</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <div class="col-2">
+            <label class="text-secondary text-success ">Violation Type id:</label>
+        </div>
+        <div class="col-4">
+
+
+            <input type="text" [(ngModel)]="selectedLevel.violationTypeId">
+
+        </div>
+    </div><br>
+</form> -->
+<div class="card m-3">
+    <h5 class="card-header">Create Reward Points</h5>
+    <div class="card-body">
+        <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group col-4">
+                <label>violationType</label>
+
+                <select class="form-select" formControlName="violationType" [(ngModel)]="selectedLevel"
+                    class="form-control">
+                    <option value="" disabled selected>Select your option</option>
+                    <option *ngFor="let item of getViolationTypes" [ngValue]="item">
+                        {{item.name}}
+                    </option>
+                </select>
+
+            </div>
+            <div class="form-group col-4">
+                <label>Violation ID</label>
+                <input type="text" formControlName="violationTypeId" class="form-control"
+                    [ngModel]="selectedLevel.violationTypeId" disabled>
+
+
+            </div>
+            <div class="form-group col-4">
+                <label>points</label>
+                <input type="text" formControlName="points" class="form-control">
+
+            </div>
+
+            <div class="form-group col-4">
+                <button class="btn btn-primary mr-1">Update</button>
+            </div>
+
+
+
+            <h6 class="text-danger">{{errorMsg}}</h6>
+
+        </form>
+    </div>
+</div>

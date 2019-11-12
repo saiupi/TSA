@@ -1,42 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { SignIn } from '../sign-in';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpService } from '../service/http.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
-
-  loginForm: FormGroup;
-  submitted = false;
-  errorMsg: any;
+export class RegisterComponent implements OnInit {
+  regForm: FormGroup;
+  submitted: boolean;
   loginId: any;
+  errorMsg: any;
 
-  constructor(private formBuilder: FormBuilder, private myRoute: Router, private auth: AuthService
+  constructor(private formBuilder: FormBuilder, private route: Router, private auth: AuthService
     , private loginServices: HttpService) { }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
+    this.regForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required]]
       // password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  get f() { return this.loginForm.controls; }
+  get f() { return this.regForm.controls; }
 
   onSubmit() {
     this.submitted = true;
 
     let adminProfile = {
-      username: this.loginForm.controls['username'].value,
-      password: this.loginForm.controls['password'].value,
+      username: this.regForm.controls['username'].value,
+      password: this.regForm.controls['password'].value,
 
     }
 
@@ -44,17 +42,17 @@ export class LoginComponent implements OnInit {
 
     // this.loginService.login(profile).subscribe ((res) => {
 
-    if (this.loginForm.invalid) {
+    if (this.regForm.invalid) {
       return;
     }
-    this.loginServices.post('/admin/login',adminProfile).subscribe((res) => {
+    this.loginServices.post('/admin/register',adminProfile).subscribe((res) => {
 
       console.log("username and password", res)
       this.loginId=res['data']._id;
          
       console.log("results",this.loginId)
       this.auth.sendToken(this.loginId)
-      this.myRoute.navigate(["/dashboard"]);
+      this.route.navigate(["/dashboard"]);
       alert('SUCCESS!! :-)')
     },
       (error: HttpErrorResponse) => {
@@ -64,8 +62,9 @@ export class LoginComponent implements OnInit {
         console.log("error",this.errorMsg)
       });
   }
+
   register(){
-    this.myRoute.navigate(["/reg"]);
+    this.route.navigate(["/login"]);
   }
 
 }

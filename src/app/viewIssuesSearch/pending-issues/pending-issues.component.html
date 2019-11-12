@@ -62,7 +62,7 @@
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-xl">
         <!-- Modal content-->
-        <form  [formGroup]="myform" (ngSubmit)="saveView()">
+        <form [formGroup]="myform" (ngSubmit)="saveView()">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Table detailes</h4>
@@ -86,20 +86,20 @@
                                             class="form-control" name="reportId">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label>mobileNum</label>
+                                        <label>mobileNumber</label>
                                         <input type="text" placeholder="mobileNum" formControlName="mobileNum"
                                             class="form-control" name="mobileNum">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label>offenceCategory</label>
+                                        <label>OffenceCategory</label>
                                         <input type="text" placeholder="offenceCategory"
                                             formControlName="offenceCategory" class="form-control"
                                             name="offenceCategory">
                                     </div>
                                     <div class="col-sm-6">
-                                        <label>status</label>
+                                        <label>VehicleType</label>
 
 
                                         <select class="form-control" formControlName="vehicleType" name="status">
@@ -113,7 +113,9 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-
+                                        <label>issueDate</label>
+                                        <input type="text" placeholder="issueDate" formControlName="issueDate"
+                                            class="form-control" name="issueDate">
                                     </div>
                                     <div class="col-sm-6">
                                         <label>location</label>
@@ -123,22 +125,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label>status</label>
+                                        <label>Status</label>
 
 
                                         <select class="form-control" formControlName="status" name="status">
-                                            <option selected> Select Status</option>
+                                            <option disabled selected> Select Status</option>
                                             <option value="approved">approved</option>
                                             <option value="rejected">rejected</option>
                                             <option value="pending">pending</option>
 
                                         </select>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <label>issueDate</label>
-                                        <input type="text" placeholder="issueDate" formControlName="issueDate"
-                                            class="form-control" name="issueDate">
-                                    </div>
+
 
                                 </div>
 

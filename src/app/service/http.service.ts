@@ -7,7 +7,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HttpService {
   
-  apiUrl: string = 'http://192.168.3.211:4000'
+  //apiUrl: string = 'http://192.168.3.211:4000'
+  apiUrl: string = 'http://115.112.122.99:3055/api'
   // /userDetails/adminLogin
   constructor(public http: HttpClient) { }
   get(url) {
@@ -21,21 +22,14 @@ export class HttpService {
 
     return this.http.post(this.apiUrl + url, body)
   }
+  put(url, body) {
+
+
+    return this.http.put(this.apiUrl + url, body)
+  }
+
+  updateT(url,traveller: any, id:any){
+    return this.http.put(this.apiUrl + url +id, traveller);
+  }
+
 }
-  //   let loading =   this.loadingController.create({
-  //     spinner: 'crescent',
-  //    // duration: 2000,
-  //     message: 'Please wait...',
-  //   });
-  //   loading.then(loading => loading.present());
-
-
-  //   // return this.http.get('http://192.168.2.57:4000/offence/getAll')
-  //   return this.http.get(this.apiUrl+url)
-  //     .finally(() => {
-  //        loading.then(loading => loading.dismiss());
-
-  //     });
-  // }
-
-

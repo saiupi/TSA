@@ -36,12 +36,14 @@
     <tbody>
 
         <tr *ngFor="let view of totalIssues | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
-            <td>{{view.offenceCategory}}</td>
+            <td>{{view.violationTypeId}}</td>
             <td>{{view.location}}</td>
             <td class="text-info">{{view.status}}</td>
-            <td>{{view.issueDate}}</td>
-            <td><img [src]="'data:image/jpg;base64,'+view.image" class="img-fluid" alt="Responsive image" style="border-radius: 50% !important;
-          height:50px; width:50px;"></td>
+            <td>{{view.createdAt| date: 'dd/MM/yyyy'}}</td>
+            <!-- <td><img [src]="'data:image/jpg;base64,'+view.image" class="img-fluid" alt="Responsive image" style="border-radius: 50% !important;
+          height:50px; width:50px;"></td> -->
+          <td><img [src]="view.image" class="img-fluid" alt="Responsive image" style="border-radius: 50% !important;
+            height:50px; width:50px;"></td>
 
             <td><button class="btn btn-info" data-toggle="modal" data-target="#myModal"
                     (click)="details(view)">Details</button></td>

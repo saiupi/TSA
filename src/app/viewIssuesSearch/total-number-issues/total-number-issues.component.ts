@@ -15,12 +15,12 @@ export class TotalNumberIssuesComponent implements OnInit {
 
   ngOnInit() {
 
-    return this.totalService.get('/viewIssue/totalpost').subscribe((res) => {
+    return this.totalService.get('/violation/getAllViolations').subscribe((res) => {
       
-      
-      this.totalIssues=res['userReport']
+      console.log("getallIssue", res)
+      this.totalIssues=res['data']
       this.loading = false;
-      console.log("Pending Issue", res)
+      
     
     });
     

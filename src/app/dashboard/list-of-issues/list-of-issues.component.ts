@@ -20,10 +20,10 @@ export class ListOfIssuesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.totalcount();
-    this.approvedcount();
-    this.pendingcount();
-    this.rejectedcount();
+    // this.totalcount();
+    // this.approvedcount();
+    // this.pendingcount();
+    // this.rejectedcount();
 
 
   }

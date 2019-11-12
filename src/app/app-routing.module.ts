@@ -9,6 +9,9 @@ import { ApprovedIssuesComponent } from './viewIssuesSearch/approved-issues/appr
 import { PendingIssuesComponent } from './viewIssuesSearch/pending-issues/pending-issues.component';
 import { RejectedIssuesComponent } from './viewIssuesSearch/rejected-issues/rejected-issues.component';
 import { TotalNumberIssuesComponent } from './viewIssuesSearch/total-number-issues/total-number-issues.component';
+import { OffenceTypeComponent } from './offence-type/offence-type.component';
+import { VehicleTypeComponent } from './create-reward-points/vehicle-type.component';
+import { RegisterComponent } from './register/register.component';
 
 
 const routes: Routes = [
@@ -16,13 +19,16 @@ const routes: Routes = [
     path: '', redirectTo: 'login', pathMatch: 'full',
   },
   { path: 'login', component: LoginComponent },
+  { path: 'reg', component: RegisterComponent },
   // { path: 'dashboard', component: DashboardComponent, canActivate: [AuthcationGuard] },
   { path: 'dashboard', component: DashboardComponent,canActivate: [AuthcationGuard] ,children: [     
     { path: '', component: PendingIssuesComponent },
  { path: 'totalIssues', component: TotalNumberIssuesComponent },
   { path: 'approved', component: ApprovedIssuesComponent },
   { path: 'pending', component: PendingIssuesComponent },
-  { path: 'rejected', component: RejectedIssuesComponent },] },
+  { path: 'rejected', component: RejectedIssuesComponent },
+  { path: 'offence', component: OffenceTypeComponent },
+  { path: 'vehicle', component: VehicleTypeComponent },]},
   { path: 'issues', component: ListOfIssuesComponent },
  
   { path: '**', component: ServerNotFoundComponent },

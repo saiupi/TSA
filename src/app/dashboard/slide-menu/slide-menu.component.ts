@@ -6,12 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./slide-menu.component.css']
 })
 export class SlideMenuComponent implements OnInit {
-  userName:string
+  id:string
   constructor() { }
 
   ngOnInit() {
-    this.userName = localStorage.getItem('LoggedInUser');
-    console.log("usrname",this.userName);
+    this.id = localStorage.getItem('LoggedInUser');
+    console.log("usrname",this.id);
   }
   
 }

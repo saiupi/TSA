@@ -21,6 +21,9 @@ import { HttpClientModule } from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FilterPipe } from './pipe/filter.pipe';
+import { VehicleTypeComponent } from './create-reward-points/vehicle-type.component';
+import { OffenceTypeComponent } from './offence-type/offence-type.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { FilterPipe } from './pipe/filter.pipe';
     PendingIssuesComponent,
     RejectedIssuesComponent,
     FilterPipe,
+    VehicleTypeComponent,
+    OffenceTypeComponent,
+    RegisterComponent,
     
   ],
   imports: [
