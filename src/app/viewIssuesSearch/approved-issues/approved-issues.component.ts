@@ -11,19 +11,15 @@ export class ApprovedIssuesComponent implements OnInit {
   approvedIssues: any;
   fullDetails: any;
   loading = true;
-  image: any;
-  issueDate: any;
-  location: any;
-  offenceCategory: any;
-  reportId: any;
-  status: any;
-  vehicleType: any;
+  approvedCont:any;
+  
   constructor(private approvedService: HttpService) { }
 
   ngOnInit() {
-    return this.approvedService.get('/viewIssue/approved').subscribe((res) => {
-      this.approvedIssues = res['userReport'];
-      console.log("Pending Issue", this.approvedIssues);
+    return this.approvedService.get('/violation/getFilteredViolations?status=1001').subscribe((res) => {
+      this.approvedIssues = res['data'];
+      this.approvedCont=this.approvedIssues.length
+      console.log("approved Issue", this.approvedIssues);
       this.loading = false;
     });
 
@@ -31,21 +27,9 @@ export class ApprovedIssuesComponent implements OnInit {
 
 
 
-  
+
   details(view) {
-    this.fullDetails = view
 
-
-
-    this.image = this.fullDetails.image;
-    this.issueDate = this.fullDetails.issueDate;
-    this.location = this.fullDetails.location;
-    this.offenceCategory = this.fullDetails.mobileNum;
-    this.offenceCategory = this.fullDetails.offenceCategory;
-    this.reportId = this.fullDetails.reportId;
-    this.status = this.fullDetails.status;
-    this.vehicleType = this.fullDetails.vehicleType;
-    console.log("fullinformation", this.vehicleType);
 
 
 

@@ -1,7 +1,7 @@
-<form style="margin-top:30px" [formGroup]="violationTypeForm">
-  <div class="form-row">
+<form style="margin-top:30px" [formGroup]="violationTypeForm" class="card p-3">
+  <div class="form-row ">
     <div class="col-2">
-      <label class="text-secondary text-success ">Violation Type</label>
+      <label class="text-secondary text-success display">Violation Type</label>
     </div>
     <div class="col-4">
       <input type="text" class="form-control" formControlName="name" placeholder="Violation Type">
@@ -19,7 +19,7 @@
 <table class="table table-hover bg-light mt-3">
   <thead>
     <tr class="text-secondary">
-      <th>Id</th>
+      <!-- <th>Id</th> -->
       <th>Name</th>
       <th>ViolationTypeId</th>
       <th>Edit</th>
@@ -32,7 +32,7 @@
   <tbody>
 
     <tr *ngFor="let view of getViolationTypes">
-      <td>{{view._id}}</td>
+      <!-- <td>{{view._id}}</td> -->
       <td>{{view.name}}</td>
       <td>{{view.violationTypeId}}</td>
       <td><button type="button" class="btn btn-info" (click)="edit(view)" data-toggle="modal"
@@ -58,7 +58,7 @@
             <div class="col-sm-8">
               <label>violationTypeId</label>
               <input type="text" placeholder="issueDate" formControlName="violationTypeId" class="form-control"
-                name="issueDate">
+                name="violationTypeId" disabled>
             </div>
           </div>
           <div class="row">

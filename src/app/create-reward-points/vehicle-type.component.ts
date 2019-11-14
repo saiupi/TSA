@@ -30,10 +30,10 @@ export class VehicleTypeComponent implements OnInit {
 
 
   // }
-
-  levels:Array<Object> = [
-      {num: 0, name: ""},
-      {num: 1, name: ""}
+  selectedLevels:any;
+  levels: Array<Object> = [
+    { num: 0, name: "" },
+    { num: 1, name: "" }
   ];
 
   selectedLevel = this.levels[0];
@@ -45,21 +45,41 @@ export class VehicleTypeComponent implements OnInit {
   submitted = false;
   errorMsg: any;
   getViolationTypes: any;
+  getBaseRewards: any;
+  dd: any;
+  violationId: any;
+  order: any;
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder, private vechicleService: HttpService) { }
 
   ngOnInit() {
+    this.getRewards();
+    this.getViolation();
     this.updateForm = this.formBuilder.group({
       violationType: ['', Validators.required],
       violationTypeId: ['', Validators.required],
       points: ['', Validators.required],
     });
+   
+    
+  }
+  getViolation() {
     return this.vechicleService.get('/violationType/getViolationTypes').subscribe((res) => {
       this.getViolationTypes = res['data'];
       console.log("getViolationTypes", this.getViolationTypes)
 
     });
+
   }
+  getRewards(){
+    return this.vechicleService.get('/rewards/getBaseRewards').subscribe((res) => {
+      this.getBaseRewards = res['data'];
+      console.log("getBaseRewards", this.getBaseRewards)
+
+    });
+  
+  }
+
 
   // convenience getter for easy access to form fields
   get f() { return this.updateForm.controls; }
@@ -78,11 +98,11 @@ export class VehicleTypeComponent implements OnInit {
 
     }
 
-    return this.http.post('http://192.168.1.55:3055/api/rewards/createRewardPoint', violationUpdate).subscribe((res) => {
+    return this.vechicleService.post('/rewards/createRewardPoint',violationUpdate).subscribe((res) => {
 
-      console.log("getViolationTypes", res);
-      swal.fire('congrats...', 'Issue has been delete successfully', 'success');
-
+      console.log("getViolationTypesdfasf",res);
+      swal.fire('congrats...', 'violation UpdateiolationUpdatee successfully', 'success');
+      this.getRewards();
       this.updateForm.reset();
     },
       (error: HttpErrorResponse) => {
@@ -90,7 +110,7 @@ export class VehicleTypeComponent implements OnInit {
 
         this.errorMsg = error.error.message;
         console.log("error", this.errorMsg);
-        //swal.fire('congrats...', 'Issue has been delete successfully', 'error');
+        swal.fire('Error...', 'Reward already registered', 'error');
       });
 
 
@@ -100,8 +120,17 @@ export class VehicleTypeComponent implements OnInit {
     this.submitted = false;
 
   }
+  
 
-
-
-
+ 
+ 
+//   <!-- <select (change)="onChange($event.target.value)" formControlName="violationType">
+//   <option *ngFor="let i of getViolationTypes"  [value]="i.name">
+//       {{i.name}}</option>
+// </select> -->
+callType(value){
+  console.log("dfasfjdjf",value);
+  this.order.type=value;
+  console.log("dfasfjdjfdfasfd", this.order.type);
+}
 }

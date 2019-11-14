@@ -66,44 +66,71 @@
         </div>
     </div><br>
 </form> -->
-<div class="card m-3">
-    <h5 class="card-header">Create Reward Points</h5>
-    <div class="card-body">
+<div class="card" style="margin-top: 20px;">
+    <h5 class="card-header text-success">Create Reward Points</h5>
+    <div class="card-body ">
         <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
 
             <div class="form-group col-4">
                 <label>violationType</label>
 
-                <select class="form-select" formControlName="violationType" [(ngModel)]="selectedLevel"
-                    class="form-control">
+                <select class="form-select" formControlName="violationType" (change)="onChange($event.target.value)"
+                    [(ngModel)]="selectedLevel" class="form-control">
                     <option value="" disabled selected>Select your option</option>
-                    <option *ngFor="let item of getViolationTypes" [ngValue]="item">
+                    <option *ngFor="let item of getViolationTypes" [ngValue]="item || item.name">
                         {{item.name}}
                     </option>
                 </select>
 
             </div>
+
             <div class="form-group col-4">
                 <label>Violation ID</label>
                 <input type="text" formControlName="violationTypeId" class="form-control"
                     [ngModel]="selectedLevel.violationTypeId" disabled>
-
-
             </div>
             <div class="form-group col-4">
                 <label>points</label>
                 <input type="text" formControlName="points" class="form-control">
 
             </div>
-
             <div class="form-group col-4">
                 <button class="btn btn-primary mr-1">Update</button>
             </div>
-
-
-
             <h6 class="text-danger">{{errorMsg}}</h6>
 
+            <!-- <select class="form-control" #t (change)="callType($event)">
+                    <option *ngFor="let type of getViolationTypes" [value]="type">{{type.name}}</option>
+                  </select> -->
+
+
         </form>
+        <!-- <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCountry.violationTypeId">
+                <option *ngFor="let country of getViolationTypes" value= {{country.violationTypeId}}>
+                   {{country.name}}
+                </option>
+              </select>
+              <br/>
+              Selected Country ID: {{selectedCountry.violationTypeId}} & Name: {{selectedCountry.name}} -->
     </div>
 </div>
+<table class="table table-hover bg-light mt-3">
+    <thead>
+        <tr class="text-secondary">
+            <th>Violation Type</th>
+            <th>ViolationTypeId</th>
+            <th>points</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let view of getBaseRewards">
+            <td>{{view.violationType}}</td>
+            <td>{{view.violationTypeId}}</td>
+            <td>{{view.points}}</td>
+
+
+            <td><button class="btn btn-info">Details</button></td>
+        </tr>
+    </tbody>
+</table>

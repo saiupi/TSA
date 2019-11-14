@@ -18,6 +18,7 @@ export class OffenceTypeComponent implements OnInit {
   errorMsg: any;
   getViolationTypes: Object;
   deleteViolations: any;
+  loading = true;
 
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder,
@@ -68,15 +69,17 @@ export class OffenceTypeComponent implements OnInit {
       return;
     }
     this.vehicleServices.post('/violationType/createViolationType',violationType).subscribe((res) => {
+      swal.fire('congrats...', 'Issue has been CreateViolationType successfully', 'success');
       this.violationGet();
       console.log("username and password", res);
-      swal.fire('congrats...', 'Issue has been posted successfully', 'success');
+     
 
 
     },
       (error: HttpErrorResponse) => {
         console.log("error responesx", error.error.message); // body
-
+        swal.fire('OPPs...', 'Reward already registered with violationTypeId', 'error');
+  
         this.errorMsg =  error.error.message;
         console.log("error", this.errorMsg)
       });
@@ -97,9 +100,10 @@ export class OffenceTypeComponent implements OnInit {
     }
 //
     this.http.request('delete','http://192.168.1.55:3055/api/violationType/deleteViolationType',{body:deleteviolations}).subscribe((res) => {
-      this.violationGet();
-      console.log("username and password", res);
       swal.fire('congrats...', 'Issue has been delete successfully', 'success');
+    this.violationGet();
+      console.log("username and password", res);
+     
       // this.router.navigate(['/dashboard/offence']);
     })
 
@@ -115,11 +119,12 @@ export class OffenceTypeComponent implements OnInit {
       'name': this.myform.controls['name'].value,
     }
     this.vehicleServices.post('/violationType/updateViolationType',postViolation).subscribe((res) => {
+      swal.fire('congrats...', 'Issue has been updated successfully', 'success');
+  
       this.violationGet();
 
       console.log("username and password", res);
-      swal.fire('congrats...', 'Issue has been updated successfully', 'success');
-
+    
     });
     
   }

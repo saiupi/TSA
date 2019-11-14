@@ -9,7 +9,7 @@ import { ApprovedIssuesComponent } from './viewIssuesSearch/approved-issues/appr
 import { PendingIssuesComponent } from './viewIssuesSearch/pending-issues/pending-issues.component';
 import { RejectedIssuesComponent } from './viewIssuesSearch/rejected-issues/rejected-issues.component';
 import { TotalNumberIssuesComponent } from './viewIssuesSearch/total-number-issues/total-number-issues.component';
-import { OffenceTypeComponent } from './offence-type/offence-type.component';
+import { OffenceTypeComponent } from './violation-type/offence-type.component';
 import { VehicleTypeComponent } from './create-reward-points/vehicle-type.component';
 import { RegisterComponent } from './register/register.component';
 

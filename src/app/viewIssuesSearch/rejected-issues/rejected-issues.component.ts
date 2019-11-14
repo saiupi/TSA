@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/service/http.service';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-rejected-issues',
@@ -11,19 +12,34 @@ p: number = 1;
   rejectedIssues: any;
   fullDetails:any;
   loading = true;
-  constructor(private rejectedService: HttpService) { }
+  updateForm:FormGroup;
+  rejectedCont:any;
+  constructor(private rejectedService: HttpService,private formBuilder:FormBuilder) { }
 
   ngOnInit() {
-    return this.rejectedService.get('/viewIssue/rejected').subscribe((res) => {
-     this.rejectedIssues = res['userReport']
-      console.log("rejected Issue",this.rejectedIssues)
+
+    this.updateForm = this.formBuilder.group({
+      userViolationId: ['', Validators.required],
+      // adminId: ['', Validators.required],
+      status: ['', Validators.required],
+    });
+    return this.rejectedService.get('/violation/getFilteredViolations?status=1002').subscribe((res) => {
+     this.rejectedIssues = res['data'];
+     this.rejectedCont=this.rejectedIssues.length
+      console.log("rejected Issue",this.rejectedCont)
       this.loading = false;
     });
 
   }
-  details(modalDispaly) {
-    this.fullDetails = modalDispaly
+  rejectedisuuess:any
+  rejecteddetails(data) {
+    this.rejectedisuuess=data
+    // this.updateForm.patchValue({
+    //   'userViolationId': data.userViolationId,
+    //   'status': data.status,
+    //    'image':data.image,
 
-  }
-
+    // });
+    // console.log("rejectmodeal window",data)
+}
 }

@@ -1,7 +1,6 @@
-<form>
+<!-- <form class=" mt-3 text-primary display-4">
     <div class="form-row">
         <div class="col-4">
-            <label class="text-secondary mt-3 text-success display-4">Approved Issues</label>
             <input type="text" class="form-control" placeholder="Search">
         </div>
         <div lass="col">
@@ -11,151 +10,110 @@
 
         </div>
     </div>
-</form>
+</form><br> -->
+<br>
 <div *ngIf="loading else loaded">
-    <div class="d-flex justify-content-center text-info">
+    <div class="d-flex justify-content-center text-primary">
         <div class="spinner-border" role="status">
         </div>
     </div>
 </div>
 
 
+<div class="table table-header bg-light text-success p-1"><b class="display-3">{{this.pendingCont}}</b> Total Number Of Issues</div>
 <table class="table table-hover bg-light mt-3">
     <thead>
         <tr class="text-secondary">
-            <th>MobileNumber</th>
-
+            <th>ViolationTypeId</th>
             <th>Location</th>
-            <th>OffenceCategory</th>
-
+            <th>Status</th>
             <th>IssueDate</th>
             <th>Image</th>
-
-            <th>Status</th>
-
             <th>Details</th>
         </tr>
     </thead>
     <tbody>
 
-        <tr *ngFor="let view of pendingIssues| paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
-            <td class="text-info">{{view.mobileNum}}</td>
+        <tr *ngFor="let view of totalIssues | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+            <td>{{view.violationTypeId}}</td>
             <td>{{view.location}}</td>
-            <td>{{view.offenceCategory}}</td>
+            <td class="text-info">{{view.status}}</td>
+            <td>{{view.createdAt| date: 'dd/MM/yyyy,h:mm a'}}</td>
+            <!-- <td><img [src]="'data:image/jpg;base64,'+view.image" class="img-fluid" alt="Responsive image" style="border-radius: 50% !important;
+          height:50px; width:50px;"></td> -->
+            <td> <img src="http://192.168.1.55:3055/api/images/1573637483040-image.jpg" class="img-fluid"
+                    alt="Responsive image" style="border-radius: 50% !important;
+            height:50px; width:50px;"></td>
 
-
-            <td>{{view.issueDate}}</td>
-            <td><img [src]="'data:image/jpg;base64,'+view.image" class="img-fluid" alt="Responsive image" style="border-radius:10% !important;
-            height:70px; width:70px;"></td>
-            <td>{{view.status}}</td>
-            <td> <button href="#myModal" id="openBtn" data-toggle="modal" class="btn btn-default"
-                    (click)="updateEvent(view)"><em class="fas fa-edit nav-link text-info"></em></button></td>
-            <!-- <td (click)="upDate(view)">
-                <i class="fas fa-edit nav-link text-info" aria-hidden="true" data-toggle="modal" data-target="#myModal"></i>
-            </td> -->
+            <td><button class="btn btn-info" data-toggle="modal" data-target="#myModal" (click)="details(view)"
+                    data-toggle="modal" data-target="#myModal">Details</button></td>
         </tr>
 
     </tbody>
 </table>
 
-
-<div id="myModal" class="modal fade" role="dialog">
+<div class="modal" id="myModal">
     <div class="modal-dialog modal-xl">
-        <!-- Modal content-->
-        <form [formGroup]="myform" (ngSubmit)="saveView()">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Table detailes</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
+        <div class="modal-content">
 
-                            <div class="col-5">
-
-                                <img [src]="'data:image/jpg;base64,'+images" formControlName="image" class="img-fluid"
-                                    alt="Responsive image">
-                            </div>
-
-                            <div class="col-7">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Report Id</label>
-                                        <input type="text" placeholder="reportId" formControlName="reportId"
-                                            class="form-control" name="reportId">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label>mobileNumber</label>
-                                        <input type="text" placeholder="mobileNum" formControlName="mobileNum"
-                                            class="form-control" name="mobileNum">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>OffenceCategory</label>
-                                        <input type="text" placeholder="offenceCategory"
-                                            formControlName="offenceCategory" class="form-control"
-                                            name="offenceCategory">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label>VehicleType</label>
-
-
-                                        <select class="form-control" formControlName="vehicleType" name="status">
-                                            <option selected> Select vehicleType</option>
-                                            <option *ngFor="let offence of vehicleTypes;"> {{offence.vehicleTypes}}
-                                            </option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>issueDate</label>
-                                        <input type="text" placeholder="issueDate" formControlName="issueDate"
-                                            class="form-control" name="issueDate">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label>location</label>
-                                        <input type="text" placeholder="location" formControlName="location"
-                                            class="form-control" name="location">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Status</label>
-
-
-                                        <select class="form-control" formControlName="status" name="status">
-                                            <option disabled selected> Select Status</option>
-                                            <option value="approved">approved</option>
-                                            <option value="rejected">rejected</option>
-                                            <option value="pending">pending</option>
-
-                                        </select>
-                                    </div>
-
-
-                                </div>
-
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-
-                    <button type="submit" name="submit" class="btn btn-primary float-right">Update</button>
-
-
-                </div>
+            <div class="modal-header">
+                <h4 class="modal-title">Violation Type</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
-        </form>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <img src="http://192.168.1.55:3055/api/images/1573637483040-image.jpg" class="img-fluid"
+                            alt="Responsive image">
+                    </div>
+                    <div class="col-7">
+                        <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group row">
+                                <!-- <label class="col-sm-4 col-form-label">userViolationId :</label> -->
+                                <div class="col-sm-8">
+                                    <label>userViolationId :</label>
+                                    <input type="text" formControlName="userViolationId" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <!-- <label class="col-sm-4 col-form-label">Status :</label> -->
+                                <div class="col-sm-8">
+                                    <label>Status :</label>
+                                    <select class="form-select" formControlName="status" class="form-control">
+                                        <option value="1000">Pending</option>
+                                        <option value="1001">Approved</option>
+                                        <option value="1002">Rejected</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <!-- <label class="col-sm-4 col-form-label">Status :</label> -->
+                                <div class="col-sm-8">
+
+                                    <button class="btn btn-primary mr-0">Update</button>
+                                </div>
+                            </div>
+
+
+
+                            <h6 class="text-danger">{{errorMsg}}</h6>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
     </div>
 </div>
-<pagination-controls (pageChange)="p = $event" class="pagination pagination-lg justify-content-end">
+
+<pagination-controls (pageChange)="p = $event" class="pagination pg-blue justify-content-end ">
 </pagination-controls>
