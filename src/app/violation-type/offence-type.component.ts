@@ -78,7 +78,7 @@ export class OffenceTypeComponent implements OnInit {
     },
       (error: HttpErrorResponse) => {
         console.log("error responesx", error.error.message); // body
-        swal.fire('OPPs...', 'Reward already registered with violationTypeId', 'error');
+        swal.fire('Opps...', 'Reward already registered with violationTypeId', 'error');
   
         this.errorMsg =  error.error.message;
         console.log("error", this.errorMsg)
@@ -102,7 +102,7 @@ export class OffenceTypeComponent implements OnInit {
     this.http.request('delete','http://192.168.1.55:3055/api/violationType/deleteViolationType',{body:deleteviolations}).subscribe((res) => {
       swal.fire('congrats...', 'Issue has been delete successfully', 'success');
     this.violationGet();
-      console.log("username and password", res);
+      console.log("DeleteViolations", res);
      
       // this.router.navigate(['/dashboard/offence']);
     })
@@ -119,7 +119,7 @@ export class OffenceTypeComponent implements OnInit {
       'name': this.myform.controls['name'].value,
     }
     this.vehicleServices.post('/violationType/updateViolationType',postViolation).subscribe((res) => {
-      swal.fire('congrats...', 'Issue has been updated successfully', 'success');
+      swal.fire('congrats...', `errorMsg`, 'success');
   
       this.violationGet();
 

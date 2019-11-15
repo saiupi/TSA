@@ -1,32 +1,33 @@
 <div class="row">
-
-    <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
-        <div class="card card-body">
-            <span class="text-info" [routerLink]="['pending']" routerLinkActive="active">Total Pending Issues
-                <p  class="badge badge-info" >{{pendingCounts}}</p>
-            </span>
-
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
-        <div class="card card-body">
-            <span class="text-success" [routerLink]="['approved']">Total Approved Issues
-                <p class=" badge badge-success">{{approvedCounts}}</p>
-            </span>
-        </div>
-    </div>
     <div class=" col-sm-12 col-md-12 col-lg-3 col-xl-3">
-        <div class="card card-body">
-            <span class="text-primary" [routerLink]="['totalIssues']">Total Number of Issues
-                <p class="badge badge-primary">{{totalCount.count}}</p>
+        <div class="card card-body btn btn-outline-primary" [routerLink]="['totalIssues']">
+            <span>Total Number of Issues
+                <!-- <p class="badge badge-primary">{{totalCount.count}}</p> -->
             </span>
         </div>
     </div>
+    <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
+        <!-- <div class="card card-body btn btn-outline-secondary" [routerLink]="['pending']" routerLinkActive="active"> -->
+                <div class="card card-body btn btn-outline-info" [routerLink]="['pending']">
+            <span >Total Pending Issues
+                <!-- <p  class="badge badge-info" >{{pendingCounts}}</p> -->
+            </span>
+
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
+        <div class="card card-body btn btn-outline-success"  [routerLink]="['approved']">
+            <span>Total Approved Issues
+                <!-- <p class=" badge badge-success">{{approvedCounts}}</p> -->
+            </span>
+        </div>
+    </div>
+   
 
     <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
-        <div class="card card-body">
-            <span class="text-danger" [routerLink]="['rejected']">Total Rejected Issues
-                <p class="badge badge-danger">{{rejectedCounts}}</p>
+        <div class="card card-body  btn btn-outline-danger" [routerLink]="['rejected']">
+            <span >Total Rejected Issues
+                <!-- <p class="badge badge-danger">{{rejectedCounts}}</p> -->
             </span>
         </div>
     </div>

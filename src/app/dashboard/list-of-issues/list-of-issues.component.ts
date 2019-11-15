@@ -27,38 +27,38 @@ export class ListOfIssuesComponent implements OnInit {
 
 
   }
-  totalcount() {
-    return this.totalNumService.get('/viewIssue/totalCount').subscribe((res) => {
-      this.totalCount = res['reportList'];
-      //this.counts=this.totalCount.count 
-      console.log("totalcount", this.totalCount)
+  // totalcount() {
+  //   return this.totalNumService.get('/viewIssue/totalCount').subscribe((res) => {
+  //     this.totalCount = res['reportList'];
+  //     //this.counts=this.totalCount.count 
+  //     console.log("totalcount", this.totalCount)
 
-    });
-  }
-  approvedcount() {
-    return this.totalNumService.get('/viewIssue/approvedCount').subscribe((res) => {
-      this.approvedCounts = res['reportList'].count;
-      //this.counts=this.totalCount.count 
-      console.log("approvedCounts", this.approvedCounts)
+  //   });
+  // }
+  // approvedcount() {
+  //   return this.totalNumService.get('/viewIssue/approvedCount').subscribe((res) => {
+  //     this.approvedCounts = res['reportList'].count;
+  //     //this.counts=this.totalCount.count 
+  //     console.log("approvedCounts", this.approvedCounts)
 
-    });
-  }
-  pendingcount() {
-    return this.totalNumService.get('/viewIssue/pendingCount').subscribe((res) => {
-      this.pendingCounts = res['reportList'].count;
-      //this.counts=this.totalCount.count 
-      console.log("pendingCount", this.pendingCounts)
+  //   });
+  // }
+  // pendingcount() {
+  //   return this.totalNumService.get('/viewIssue/pendingCount').subscribe((res) => {
+  //     this.pendingCounts = res['reportList'].count;
+  //     //this.counts=this.totalCount.count 
+  //     console.log("pendingCount", this.pendingCounts)
 
-    });
-  }
-  rejectedcount() {
-    return this.totalNumService.get('/viewIssue/rejectedCount').subscribe((res) => {
-      this.rejectedCounts = res['reportList'].count;
-      //this.counts=this.totalCount.count 
-      console.log("rejectedCount", this.rejectedCounts)
+  //   });
+  // }
+  // rejectedcount() {
+  //   return this.totalNumService.get('/viewIssue/rejectedCount').subscribe((res) => {
+  //     this.rejectedCounts = res['reportList'].count;
+  //     //this.counts=this.totalCount.count 
+  //     console.log("rejectedCount", this.rejectedCounts)
 
-    });
-  }
+  //   });
+  // }
   totalIssue() {
     this.router.navigate(["/totalIssues"]);
   }

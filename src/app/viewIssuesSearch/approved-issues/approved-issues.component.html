@@ -1,6 +1,5 @@
-
 <div *ngIf="loading else loaded">
-    <div class="d-flex justify-content-center text-primary">
+    <div class="d-flex justify-content-center text-success">
         <div class="spinner-border" role="status">
         </div>
     </div>
@@ -22,7 +21,7 @@
     </thead>
     <tbody>
 
-        <tr *ngFor="let view of approvedIssues">
+        <tr *ngFor="let view of approvedIssues | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
             <td>{{view.violationTypeId}}</td>
             <td>{{view.location}}</td>
             <td class="text-info">{{view.status}}</td>
@@ -39,5 +38,76 @@
 
     </tbody>
 </table>
+<pagination-controls (pageChange)="p = $event" class="pagination pagination-lg justify-content-end">
+</pagination-controls>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Approved Issues Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
 
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <img src="http://192.168.1.55:3055/api/images/1573637483040-image.jpg" class="img-fluid"
+                            alt="Responsive image">
+                    </div>
+                    <div class="col-7">
+
+
+
+                        <!-- <form>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">ReportId :</label>
+                                <div class="col-sm-6">
+                                    <b class="text-secondary">{{data.status}}</b>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Name :</label>
+                                <div class="col-sm-6">
+                                    <b class="text-secondary">{{fullDetails.location}}</b>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Mobile Number :</label>
+                                <div class="col-sm-6">
+                                    <b class="text-secondary">{{fullDetails.mobileNum}}</b>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Offence Category :</label>
+                                <div class="col-sm-6">
+                                    <b class="text-secondary">{{fullDetails.offenceCategory}}</b>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Location :</label>
+                                <div class="col-sm-6">
+                                    <b class="text-secondary">{{fullDetails.location}}</b>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">IssueDate :</label>
+                                <div class="col-sm-6">
+                                    <b class="text-secondary">{{fullDetails.issueDate}}</b>
+                                </div>
+                            </div> 
+                        </form>-->
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
