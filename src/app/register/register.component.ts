@@ -21,9 +21,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.regForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', [Validators.required]]
-      // password: ['', [Validators.required, Validators.minLength(6)]]
+      username: ['', [Validators.required, Validators.minLength(10)]],
+      password: ['', [Validators.required,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{5,15}')
+    ]]
+      //  password: ['', [Validators.required]]
     });
   }
 
@@ -52,7 +53,7 @@ export class RegisterComponent implements OnInit {
          
       console.log("results",this.loginId)
       this.auth.sendToken(this.loginId)
-      this.route.navigate(["/dashboard"]);
+      this.route.navigate(["/login"]);
       alert('SUCCESS!! :-)')
     },
       (error: HttpErrorResponse) => {

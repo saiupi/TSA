@@ -1,28 +1,23 @@
-<div class="card">
+<div class="card crd" align="center">
   <!-- <div class="card-header">Header</div> -->
   <div class="card-body"><img src="assets\imgs\pro.jfif" class="img-fluid" alt="Responsive image" style="border-radius: 50% !important;
-      overflow: hidden; height:13vw; width:13vw; border: 2px solid #eeeeee; margin-top:35px" align="center">
+      overflow: hidden; height:5vw; width:5vw; border: 2px solid #eeeeee;">
   </div>
   <div class="row">
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-      <div class="card-footer">
-        <h5 class="text-secondary">AdminId: <i>{{id}}</i>
+   
+        <h6 class="text-secondary">AdminId: <i class="text-danger">{{id}}</i>
 
-        </h5>
-        <h5 >
-
-          <!-- <i class="fas fa-sign-out-alt text-info"> Logout</i> -->
-
-        </h5>
-      </div>
+        </h6>
+   
     </div>
   </div>
 </div>
 <div class="card crd-btn">
-  <button type="button" class="btn btn-outline-info" [routerLink]="['offence']">CreateViolationType</button>
+  <button type="button" class="btn btn-outline-info" [routerLink]="['offence']">Violation Type</button>
 </div>
 <div class="card crd-btn">
-  <button type="button" class="btn btn-outline-info" [routerLink]="['vehicle']">CreateRewardPoint</button>
+  <button type="button" class="btn btn-outline-info" [routerLink]="['vehicle']">Reward Points</button>
 </div>
 

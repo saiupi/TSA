@@ -16,7 +16,7 @@ import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'login', pathMatch: 'full',
+    path: '', redirectTo: 'login',pathMatch: 'full',
   },
   { path: 'login', component: LoginComponent },
   { path: 'reg', component: RegisterComponent },
@@ -30,7 +30,6 @@ const routes: Routes = [
   { path: 'offence', component: OffenceTypeComponent },
   { path: 'vehicle', component: VehicleTypeComponent },]},
   { path: 'issues', component: ListOfIssuesComponent },
- 
   { path: '**', component: ServerNotFoundComponent },
 
 ];

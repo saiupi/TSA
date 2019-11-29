@@ -1,6 +1,13 @@
 .display-4{
-    font-size: 25px;
+    font-size: 35px;
 }
 .form-control{
-    margin-top: 15px;
+    margin-top: 4px;
     }
+    .form-row {
+       
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+   

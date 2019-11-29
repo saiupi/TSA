@@ -19,12 +19,16 @@ import { RejectedIssuesComponent } from './viewIssuesSearch/rejected-issues/reje
 import { HttpClientModule } from '@angular/common/http';
 // import { HttpClient } from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FilterPipe } from './pipe/filter.pipe';
 import { VehicleTypeComponent } from './create-reward-points/vehicle-type.component';
 import { OffenceTypeComponent } from './violation-type/offence-type.component';
 import { RegisterComponent } from './register/register.component';
-
+import { NgxImageZoomModule } from 'ngx-image-zoom';
+import {ImageZoomModule} from 'angular2-image-zoom';
+ import { FilterPipeModule } from 'ngx-filter-pipe';
+import { AutofocusDirective } from './autofocus.directive';
+import { MobileNumberDirective } from './directive/mobile-number.directive';
+import { AlphaTestDirective } from './directive/alpha-test.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +47,9 @@ import { RegisterComponent } from './register/register.component';
     VehicleTypeComponent,
     OffenceTypeComponent,
     RegisterComponent,
+    AutofocusDirective,
+    MobileNumberDirective,
+    AlphaTestDirective,
     
   ],
   imports: [
@@ -52,7 +59,10 @@ import { RegisterComponent } from './register/register.component';
     ReactiveFormsModule,
     HttpClientModule ,
     NgxPaginationModule,
-    Ng2SearchPipeModule 
+   
+    ImageZoomModule,
+    FilterPipeModule,
+    NgxImageZoomModule.forRoot() 
   ],
   //providers: [AuthcationGuard],
   providers: [],

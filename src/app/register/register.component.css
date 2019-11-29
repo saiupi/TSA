@@ -1,3 +1,6 @@
 .bgclr{
   margin-top:180px;
 }
+.container {
+  max-width:auto;
+}

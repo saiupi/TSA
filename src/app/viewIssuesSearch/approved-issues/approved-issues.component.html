@@ -6,12 +6,27 @@
 </div>
 <br>
 
-<div class="table table-header bg-light text-success p-1"><b class="display-3">{{this.approvedCont}}</b> Approved
-    Issues</div>
+<div class="form-row bg-light p-3">
+
+    <div lass="col-5">
+        <div class=" text-success"><b class="display-4">{{this.approvedCont}}</b> Approved Issues
+        </div>
+    </div>
+    <div class="col-2">
+    </div>
+    <div class="col-5">
+        <input type="text" class="form-control" (keypress)="keyPress($event)"  placeholder="Search" [(ngModel)]="Filter.violationType">
+
+    </div>
+</div>
 <table class="table table-hover bg-light mt-3">
     <thead>
         <tr class="text-secondary">
+                <!-- <th>Id</th> -->
             <th>ViolationTypeId</th>
+            <th>ViolationType</th>
+            <th>VehicleType</th>
+            <th>VehicleNumber</th>
             <th>Location</th>
             <th>Status</th>
             <th>IssueDate</th>
@@ -21,17 +36,20 @@
     </thead>
     <tbody>
 
-        <tr *ngFor="let view of approvedIssues | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+        <tr
+            *ngFor="let view of approvedIssues | filterBy: Filter| paginate: { itemsPerPage: 5, currentPage: p }; let i = index ">
+            <!-- <td>{{view._id}}</td> -->
             <td>{{view.violationTypeId}}</td>
+            <td>{{view.violationType}}</td>
+            <td>{{view.vehicleType}}</td>
+            <td>{{view.vehicleNumber}}</td>
             <td>{{view.location}}</td>
             <td class="text-info">{{view.status}}</td>
             <td>{{view.createdAt| date: 'dd/MM/yyyy,h:mm a'}}</td>
-            <!-- <td><img [src]="'data:image/jpg;base64,'+view.image" class="img-fluid" alt="Responsive image" style="border-radius: 50% !important;
-          height:50px; width:50px;"></td> -->
-            <td> <img src="http://192.168.1.55:3055/api/images/1573637483040-image.jpg" class="img-fluid"
-                    alt="Responsive image" style="border-radius: 50% !important;
-            height:50px; width:50px;"></td>
 
+            <td> <img src="http://192.168.1.55:3055/api/images/{{view.image}}" class="img-fluid" alt="Responsive image"
+                    style="border-radius: 50% !important;
+            height:50px; width:50px;"></td>
             <td><button class="btn btn-info" data-toggle="modal" data-target="#myModal" (click)="details(view)"
                     data-toggle="modal" data-target="#myModal">Details</button></td>
         </tr>
@@ -41,73 +59,37 @@
 <pagination-controls (pageChange)="p = $event" class="pagination pagination-lg justify-content-end">
 </pagination-controls>
 <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title">Approved Issues Details</h4>
+                <h5 class="modal-title text-secondary">Approved  Violation Type</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
 
             <div class="modal-body">
+
                 <div class="row">
-                    <div class="col-5">
-                        <img src="http://192.168.1.55:3055/api/images/1573637483040-image.jpg" class="img-fluid"
-                            alt="Responsive image">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                        <div class="img-hover-zoom">
+                            <!-- <ngx-image-zoom thumbImage='http://192.168.1.55:3055/api/images/{{image}}'
+                                fullImage='http://192.168.1.55:3055/api/images/{{image}}' class="img-fluid"
+                                alt="Responsive image" [magnification]="1"    [enableScrollZoom]="true" [lensWidth]="300"
+                                [lensHeight]="300">
+                            </ngx-image-zoom> -->
+                            <img src="http://192.168.1.55:3055/api/images/{{image}}" class="img-fluid"
+                                alt="Responsive image" style="height: 400px; width: 1000px;">
+                        </div>
+
                     </div>
-                    <div class="col-7">
 
-
-
-                        <!-- <form>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">ReportId :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{data.status}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Name :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.location}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Mobile Number :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.mobileNum}}</b>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Offence Category :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.offenceCategory}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Location :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.location}}</b>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">IssueDate :</label>
-                                <div class="col-sm-6">
-                                    <b class="text-secondary">{{fullDetails.issueDate}}</b>
-                                </div>
-                            </div> 
-                        </form>-->
-                    </div>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
 
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
         </div>
-    </div>
-</div>

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../service/http.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert2';
+import { flatten } from '@angular/compiler';
 
 
 @Component({
@@ -19,7 +20,6 @@ export class VehicleTypeComponent implements OnInit {
   ];
 
   selectedLevel = this.levels[0];
-  // -----------------------------------------------------------
   updateForm: FormGroup;
   submitted = false;
   errorMsg: any;
@@ -29,7 +29,10 @@ export class VehicleTypeComponent implements OnInit {
   violationId: any;
   order: any;
   myform: FormGroup;
-
+  sumbitMessage: any;
+  deleteMessage: any;
+  updateMessage: any;
+  loading = true;
   constructor(private http: HttpClient, private formBuilder: FormBuilder, private vechicleService: HttpService) { }
 
   ngOnInit() {
@@ -52,7 +55,8 @@ export class VehicleTypeComponent implements OnInit {
   getViolation() {
     return this.vechicleService.get('/violationType/getViolationTypes').subscribe((res) => {
       this.getViolationTypes = res['data'];
-      console.log("getViolationTypes", this.getViolationTypes)
+      console.log("getViolationTypes", this.getViolationTypes);
+      this.loading = false;
 
     });
   }
@@ -64,16 +68,12 @@ export class VehicleTypeComponent implements OnInit {
     });
   }
   violationname: any;
-  trackByFn(index, item) {
-    this.violationname = item.name
-    console.log(item.name);
-    return item.name;
 
-  }
   // convenience getter for easy access to form fields
   get f() { return this.updateForm.controls; }
 
   onSubmit() {
+   
     this.submitted = true;
 
     // stop here if form is invalid
@@ -88,31 +88,30 @@ export class VehicleTypeComponent implements OnInit {
 
     }
 
-    return this.vechicleService.post('/rewards/createRewardPoint', violationUpdate).subscribe((res) => {
+    this.vechicleService.post('/rewards/createRewardPoint',violationUpdate).subscribe((res) => {
 
       console.log("getViolationTypesdfasf", res);
-      swal.fire('congrats...', 'violation UpdateiolationUpdatee successfully', 'success');
+      this.sumbitMessage = res['message'];
+      swal.fire('congrats...', this.sumbitMessage, 'success');
+
       this.getRewards();
-      this.updateForm.reset();
+
+
     },
 
       (error: HttpErrorResponse) => {
         console.log("error responesx", error.error.message); // body
-  swal.fire('Opps...', `this.errorMsg`, 'error');
 
         this.errorMsg = error.error.message;
-        console.log("error", this.errorMsg)
-      });
+        console.log("error", this.errorMsg);
+        swal.fire('Oops...', this.errorMsg, 'error');
 
+      })
+    //this.updateForm.reset();
 
   }
 
-  // onReset() {
-  //   this.submitted = false;
-  //    this.updateForm.reset();
 
-
-  // }
   deleteRewardPont: any;
   delete(deleteRewardPonts) {
     this.deleteRewardPont = deleteRewardPonts;
@@ -122,7 +121,9 @@ export class VehicleTypeComponent implements OnInit {
     }
 
     this.http.request('delete', 'http://192.168.1.55:3055/api/rewards/deleteBaseReward', { body: deleteReward }).subscribe((res) => {
-      swal.fire('congrats...', 'Issue has been delete successfully', 'success');
+
+      this.deleteMessage = res['message'];
+      swal.fire('Deleted !...', this.deleteMessage, 'success');
       this.getRewards();
       console.log("DeleteViolations", res);
     });
@@ -136,44 +137,38 @@ export class VehicleTypeComponent implements OnInit {
     });
   }
 
+  upDate() {
 
-//   submit() {
-// debugger;
+    this.submitted = true;
+    let postViolation = {
+      'points': this.myform.controls['points'].value,
+      'rewardId': this.myform.controls['rewardId'].value,
+    }
+    this.vechicleService.post('/rewards/updateBaseRewards', postViolation).subscribe((res) => {
+      this.updateMessage = res['message'];
+      swal.fire('congrats...', this.updateMessage, 'success');
 
-//     if (this.myform.invalid) {
-//       return;
-//     }
-//     let rewardPoints = {
-//       'points': this.myform.controls['points'].value,
-//       'rewardId': this.myform.controls['rewardId'].value,
-//     }
-//     this.vechicleService.post('rewards/updateBaseRewards',rewardPoints).subscribe((res) => {
-//       swal.fire('congrats...', 'Issue has been updated successfully', 'success');
+      this.getRewards();
 
-//       this.getRewards();
+      console.log("updated", res);
 
-//       console.log("username and password", res);
+    });
+    this.submitted = false;
+    this.myform.reset();
+    this.closeModal();
 
-//     });
-
-//   }
-upDate() {
-
-  this.submitted = true;
-  let postViolation = {
-    'points': this.myform.controls['points'].value,
-    'rewardId': this.myform.controls['rewardId'].value,
   }
-  this.vechicleService.post('/rewards/updateBaseRewards',postViolation).subscribe((res) => {
-    swal.fire('congrats...', 'Issue has been updated successfully', 'success');
+  @ViewChild('closeBtn', { static: true }) closeBtn: ElementRef;
+  private closeModal(): void {
+    this.closeBtn.nativeElement.click();
+  }
+  reset(){
 
-    this.getRewards();
+    this.updateForm.reset();
+    // this.submitted = false;
 
-    console.log("username and password", res);
+  }
+
   
-  });
   
-}
-
-
 }

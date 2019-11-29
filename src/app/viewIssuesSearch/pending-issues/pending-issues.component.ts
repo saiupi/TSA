@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import swal from 'sweetalert2';
 import { HttpService } from 'src/app/service/http.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -21,88 +21,131 @@ export class PendingIssuesComponent implements OnInit {
   errorMsg: any;
   id: string;
   totalCont: any;
-  pendingCont:any;
-  constructor(private totalService: HttpService,private formBuilder:FormBuilder,private updateservice:HttpService,
-  private http :HttpService) { }
+  pendingCont: any;
+  changeText: boolean;
+  sumbitMessage: any;
+  statuss: any;
 
+  constructor(private totalService: HttpService, private formBuilder: FormBuilder, private updateservice: HttpService,
+    private http: HttpService) { this.changeText = false; }
+  Filter: any = { violationType: '' };
   ngOnInit() {
 
     this.updateForm = this.formBuilder.group({
       userViolationId: ['', Validators.required],
       // adminId: ['', Validators.required],
       status: ['', Validators.required],
+      vehicleType: ['', Validators.required],
+      //vehicleNumber: ['', Validators.required],
+      vehicleNumber: ['', [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}(?:[A-Z])?(?:[A-Z]*)?[0-9]{4}$')]],
     });
-     this. getViolation();
-     this.id = localStorage.getItem('LoggedInUser');
-     console.log("AdminID",this.id);
+    this.getViolation();
+    this.id = localStorage.getItem('LoggedInUser');
+    console.log("AdminID", this.id);
 
   }
 
-
-  getViolation(){
-
-
-
+  getViolation() {
     return this.totalService.get('/violation/getFilteredViolations?status=1000').subscribe((res) => {
 
       console.log("getallIssue", res)
       this.totalIssues = res['data']
-      this.pendingCont=this.totalIssues.length
-      console.log("jdjfajfkjdfskajfdas",this.pendingCont)
+      this.pendingCont = this.totalIssues.length
+      console.log("pendig issuessss", this.pendingCont)
       this.loading = false;
 
 
     });
   }
+  image: any;
   details(data) {
-    
     this.updateForm.patchValue({
       'userViolationId': data.userViolationId,
       'status': data.status,
-       'image':data.image,
+      'image': data.image,
 
     });
-    console.log("total number of issues",data)
+    this.image = data.image
+    console.log("pending images", data.image)
   }
+
+
+
+  get f() { return this.updateForm.controls; }
+
+
   onSubmit() {
+
     this.submitted = true;
 
     // stop here if form is invalid
     if (this.updateForm.invalid) {
+
       return;
     }
 
 
 
     let violationUpdate = {
-      adminId:this.id,
+      adminId: this.id,
       userViolationId: this.updateForm.controls['userViolationId'].value,
       status: this.updateForm.controls['status'].value,
-      //adminId: this.updateForm.controls['adminId'].value,
+      vehicleType: this.updateForm.controls['vehicleType'].value,
+      vehicleNumber: this.updateForm.controls['vehicleNumber'].value,
+
 
     }
+    this.statuss = this.updateForm.controls['status'].value;
 
-    //return this.http.post('http://192.168.1.55:3055/api/violation/updateViolationStatus',violationUpdate).subscribe((res) => {
+    if (this.statuss == 1000) {
+      swal.fire('Oops....', 'Dont try to Update Pending Status', 'error');
+      // alert("Dont try to Update Pending Status");
+    }
+    else {
+      //return this.http.post('http://192.168.1.55:3055/api/violation/updateViolationStatus',violationUpdate).subscribe((res) => {
 
-    return this.updateservice.post('/violation/updateViolationStatus',violationUpdate).subscribe((res) => {
+      return this.updateservice.post('/violation/updateViolationStatus', violationUpdate).subscribe((res) => {
 
-      console.log("getViolationTypes", res);
-      this.loading = false;
+        console.log("pending ViolationTypes", res);
+        this.sumbitMessage = res['message'];
+        console.log("getViolationTypes", this.sumbitMessage);
+        this.loading = false;
 
-      swal.fire('congrats...', 'Issue has been delete successfully', 'success');
-      this. getViolation();
-      this.updateForm.reset();
-    },
-      (error: HttpErrorResponse) => {
-        console.log("error responesx", error.error); // body
+        swal.fire('', this.sumbitMessage, 'success');
+        this.getViolation();
+        this.updateForm.reset();
+        this.closeModal();
 
-        this.errorMsg = error.error.message;
-        console.log("error", this.errorMsg);
-        //swal.fire('congrats...', 'Issue has been delete successfully', 'error');
-      });
+      },
+        (error: HttpErrorResponse) => {
+          console.log("error responesx", error.error); // body
+
+          this.errorMsg = error.error.message;
+          //console.log("error", this.errorMsg);
+          swal.fire('Oops....', 'rewards details not found for this violation type', 'error');
+        });
 
 
+    }
   }
+  @ViewChild('closeBtn', { static: true }) closeBtn: ElementRef;
 
+  private closeModal(): void {
+    this.closeBtn.nativeElement.click();
+  }
+  reset() {
+    this.submitted = false;
+    this.closeModal();
+    this.updateForm.reset();
+  }
+  keyPress(event: any) {
+    const pattern = /^[a-zA-Z ]*$/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
 
 }

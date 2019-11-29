@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { HttpService } from '../service/http.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -23,9 +24,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', [Validators.required]]
-      // password: ['', [Validators.required, Validators.minLength(6)]]
+      username: ['', [Validators.required, Validators.minLength(10)]],
+    //   password: ['', [Validators.required,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{5,15}')
+    // ]]
+       password: ['', [Validators.required]]
     });
   }
 
@@ -55,12 +57,13 @@ export class LoginComponent implements OnInit {
       console.log("results",this.loginId)
       this.auth.sendToken(this.loginId)
       this.myRoute.navigate(["/dashboard"]);
-      alert('SUCCESS!! :-)')
+      // alert('SUCCESS!! :-)')
     },
       (error: HttpErrorResponse) => {
         console.log("error responesx", error.error); // body
 
         this.errorMsg = error.error.message;
+        swal.fire('Oops....', this.errorMsg, 'error');
         console.log("error",this.errorMsg)
       });
   }

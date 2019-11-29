@@ -1,0 +1,9 @@
+.btn:focus{
+    background: red;
+  }
+ 
+    ::ng-deep .ngxImageZoomContainer > img{
+      max-height: 450px!important;
+      border-radius: 10px;
+      }
+      

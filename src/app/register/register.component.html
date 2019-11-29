@@ -1,76 +1,45 @@
-<!-- <div class="wrapper">
-
-
-    <div class="container">
-
-        <h3 align="center">Traffic Sudharo Admin Register</h3>
-        <hr class="type">
-        <h3 class="text-danger">{{errorMsg}}</h3>
-        <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label class="text-light">User Name</label>
-                <input type="text" formControlName="username"
-                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                    <div *ngIf="f.username.errors.required">username is required</div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="text-light">Password</label>
-                <input type="password" formControlName="password"
-                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
-                </div>
-
-            </div>
-            <div class="form-group">
-                <button [disabled]="loading" class="btn btn-primary">Rigster</button>
-            </div>
-            <div class="form-group">
-                <button [disabled]="loading" class="btn btn-primary" (click)="register()">Login</button>
-            </div>
-
-
-        </form>
-
-    </div>
-
-
-
-</div> -->
 <div class="container bgclr">
-    <div class="row">
+    <div class="row card p-5">
         <div class="col-md-6 offset-md-3">
-            <h4>Traffic Sudharo Admin Register</h4>
-            <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
+            <h4 class="text-secondary">Traffic Sudharo Admin Register</h4><br>
+            <form [formGroup]="regForm "  (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label>User Name</label>
-                    <input type="text" formControlName="username" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" required>
-                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                        <div *ngIf="f.firstName.errors.required">username is required</div>
+                    <input appMobileNumber maxlength="10" type="text" formControlName="username" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.username.errors }"  placeholder="Mobile Number" palcehorequired>
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">username is required</div>
+                        <div *ngIf="f.username.errors.minlength" class="errorfs">username must be at least 10
+                            characters
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="text" formControlName="password" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                        <div *ngIf="f.lastName.errors.required">Passwordis required</div>
+                    <input type="password" formControlName="password"  placeholder="Password" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Passwordis required</div>
+                        <div *ngIf="f.password.errors.pattern" class="errorfs">At least 6 characters
+                            Lowercase letters
+                            Uppercase letters
+                            Numbers
+                            Special and characters</div>
+
                     </div>
                 </div>
 
-
-                <div class="form-group">
-                    <button class="btn btn-primary">Register</button>
+                <p class="text-danger">{{errorMsg}}</p><br>
+                <div class="form-group row justify-content-center">
+                    <button class="btn btn-primary">Register</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-link" (click)="register()">Go To Login</button>
                 </div>
 
             </form>
-            <div class="form-group">
+
+            <!-- <div class="form-group">
                 <button [disabled]="loading" class="btn btn-primary" (click)="register()">Login</button>
-            </div>
+            </div> -->
 
         </div>
     </div>

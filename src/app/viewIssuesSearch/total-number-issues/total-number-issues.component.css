@@ -1,6 +1,25 @@
 .display-4{
-    font-size: 25px;
+  font-size: 35px;
 }
-/* .form-control{
-    margin-top: 15px;
-    } */
+.img-hover-zoom {
+    height: auto; 
+    
+    overflow: hidden; 
+  }
+  
+  
+  .img-hover-zoom img {
+    transition: transform .5s ease;
+  }
+  
+  .img-hover-zoom:hover img {
+    transform: scale(1.9);
+  }
+  .form-row {
+       
+    margin-right: auto;
+    margin-left: auto;
+}
+.form-control{
+  margin-top: 4px;
+  }

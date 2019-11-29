@@ -8,14 +8,14 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./rejected-issues.component.css']
 })
 export class RejectedIssuesComponent implements OnInit {
-p: number = 1;
+  p: number = 1;
   rejectedIssues: any;
-  fullDetails:any;
+  fullDetails: any;
   loading = true;
-  updateForm:FormGroup;
-  rejectedCont:any;
-  constructor(private rejectedService: HttpService,private formBuilder:FormBuilder) { }
-
+  updateForm: FormGroup;
+  rejectedCont: any;
+  constructor(private rejectedService: HttpService, private formBuilder: FormBuilder) { }
+  Filter: any = { violationType: '' };
   ngOnInit() {
 
     this.updateForm = this.formBuilder.group({
@@ -24,22 +24,34 @@ p: number = 1;
       status: ['', Validators.required],
     });
     return this.rejectedService.get('/violation/getFilteredViolations?status=1002').subscribe((res) => {
-     this.rejectedIssues = res['data'];
-     this.rejectedCont=this.rejectedIssues.length
-      console.log("rejected Issue",this.rejectedCont)
+      this.rejectedIssues = res['data'];
+      console.log("rejected Issue", this.rejectedIssues);
+      this.rejectedCont = this.rejectedIssues.length;
+      console.log("rejected count", this.rejectedCont);
       this.loading = false;
     });
 
   }
-  rejectedisuuess:any
-  rejecteddetails(data) {
-    this.rejectedisuuess=data
+  image: any
+  details(data) {
+    
     // this.updateForm.patchValue({
     //   'userViolationId': data.userViolationId,
     //   'status': data.status,
     //    'image':data.image,
 
     // });
-    // console.log("rejectmodeal window",data)
-}
+    this.image=data.image
+    console.log("rejectmodeal window", this.image);
+  }
+  keyPress(event: any) {
+    const pattern = /^[a-zA-Z ]*$/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
+  
 }
